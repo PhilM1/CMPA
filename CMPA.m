@@ -36,3 +36,24 @@ ylabel('Current (V)');
 title('Part 1 - Current vs Voltage (Log Scale)');
 
 %PART 2 ----------------
+%Fitting
+fit4 = polyfit(VArray, IArray, 4);
+fit4rnd = polyfit(VArray, IArray_Random, 4);
+fit8 = polyfit(VArray, IArray, 8);
+fit8rnd = polyfit(VArray, IArray_Random, 8);
+%fig3 = figure(3);
+figure(1);
+plot(VArray, polyval(fit4, VArray),'LineWidth', 2);
+hold on;
+plot(VArray, polyval(fit4rnd, VArray),'LineWidth', 2);
+plot(VArray, polyval(fit8, VArray),'LineWidth', 2);
+plot(VArray, polyval(fit8rnd, VArray),'LineWidth', 2);
+legend('I', 'Irnd', 'IFit4', 'IrndFit4', 'IFit8', 'IrndFit8');
+
+%swap to log
+%set(gca, 'YScale', 'log');
+
+%PART 3 ----------------
+
+
+
