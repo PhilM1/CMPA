@@ -54,6 +54,31 @@ legend('I', 'Irnd', 'IFit4', 'IrndFit4', 'IFit8', 'IrndFit8');
 %set(gca, 'YScale', 'log');
 
 %PART 3 ----------------
+%A is Is, B is Gp , C is Ib, D is Vb,
 
+%2 PARAMS: A, C
+fo = fittype('A.*(exp(1.2*x/25e-3)-1) + Gp.*x - C*(exp(1.2*(-(x+Vb))/25e-3)-1)');
+ff = fit(transpose(VArray),transpose(IArray),fo);
+If = ff(VArray);
+fig5 = figure(5);
+plot(VArray, transpose(If), 'LineWidth', 2);
 
+%3 PARAMS: A, B, C
+fo = fittype('A.*(exp(1.2*x/25e-3)-1) + B.*x - C*(exp(1.2*(-(x+Vb))/25e-3)-1)');
+ff = fit(transpose(VArray),transpose(IArray),fo);
+If = ff(VArray);
+hold on; 
+plot(VArray, transpose(If), 'LineWidth', 2);
 
+%4 PARAMS: A, B, C, D
+fo = fittype('A.*(exp(1.2*x/25e-3)-1) + B.*x - C*(exp(1.2*(-(x+D))/25e-3)-1)');
+ff = fit(transpose(VArray),transpose(IArray),fo);
+If = ff(VArray);
+hold on;
+plot(VArray, transpose(If), 'LineWidth', 2);
+legend('2 Params', '3 Params', '4 Params');
+title('Curve fitting using fit()');
+xlabel('Voltage (V)');
+ylabel('Current (A)');
+
+%PART 4 -----------------
