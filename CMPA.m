@@ -9,7 +9,7 @@ Gp = 0.1; %1/Ohm
 
 %PART 1 ----------------
 
-I = @(x) Is*(exp(1.2*x/0.025)-1)+ Gp * x + Ib*exp(-1.2/0.25*(x+Vb));
+I = @(x) Is*(exp(1.2*x/0.025)-1)+ Gp * x - Ib*exp(-1.2/0.025*(x+Vb));
 
 VArray = linspace(-1.95,0.7,200);
 IArray = I(VArray);
@@ -82,3 +82,19 @@ xlabel('Voltage (V)');
 ylabel('Current (A)');
 
 %PART 4 -----------------
+
+fig6 = figure(6);
+inputs = VArray.';
+targets = IArray.';
+hiddenLayerSize = 10;
+net = fitnet(hiddenLayerSize);
+net.divideParam.trainRatio = 70/100;
+net.divideParam.valRatio = 15/100;
+net.divideParam.testRatio = 15/100;
+[net,tr] = train(net,inputs,targets);
+outputs = net(inputs);
+errors = gsubtract(outputs,targets);
+performance = perform(net,targets,outputs);
+view(net);
+Inn = outputs;
+plot(VArray, outputs);
